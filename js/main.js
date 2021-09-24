@@ -1,32 +1,52 @@
 // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<Declaration des variables>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-let life = 7;
 let words = [
     "concatenation",
-    "javascipt",
+    "javascript",
     "prototype",
     "recursive"
 ];
-let selectedWords = words[Math.floor(Math.random() * words.length)];
-let hiddenWord = [];
+let selectedWords = words[Math.floor(Math.random() * words.length)]; //selection aléatoire du mot
+let splitWord = selectedWords.split("");                             //éclatement du mot selectionné 
+let hiddenWord = [];                                                 //création d'un tableau vide
+let life = 7;                                                        //nombre de coup de base
+let play = true;                                                     //boolean utilisé pour faire boucler la fonction principale(main)
 
-    
+//<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<Mise en place des fonctions>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
-for (let i = 0; i < selectedWords.length; i++) {
-        selectedWords[i] = hiddenWord.push(" _ ") 
-     };
-
-console.log(selectedWords);
-console.log(hiddenWord);
-
-alert(hiddenWord)
-
+function underscoreWord() {
+    for (let i = 0; i < selectedWords.length; i++) {                 //incrémentation des underscores dans le tableau vide(même nombre que mot éclaté)
+    selectedWords[i] = hiddenWord.push(" _ ") 
+    }
+};
 
 function Main() {
-   
-    for (let i = 0; i < selectedWords.length; i++) {
-        hiddenWord.push(" _ ") 
-     };
+    let find ;                                                       //variable utilisé pour définir true ou false sur l'imput du joueur 
+    while (play === true){                                           //boucle principale de la fonction avec comme condition (voir ligne 12)
+        find = false;
+        if (hiddenWord.join("") === splitWord.join("")) {            // termine le jeu quand le joueur à trouvé le mot
+            play = false;
+            return alert (`Bravo vous avez trouvé le mot ${selectedWords} (>'-')>`)
+            }
+        
+            let playerImput = prompt( "il vous reste " + life + " tentatives \n"  + hiddenWord ) //demande d'imput au joueur + affichage du mot en underscore
 
-
-
+        for (let i = 0; i < splitWord.length; i++) {                //vérification de la concordance des index (imput joueur/mot éclaté)
+            if (splitWord[i] === playerImput) {
+            hiddenWord[i] = playerImput ;
+             find = true;
+            }
+        }
+        if (find === false) {                                      //Perte d'un coup si aucune concordance
+            life--; 
+        }
+        if (life === 0) {                                          //si plus de coup annonce de la défaite + affichage du mot
+            play = false;
+            alert (`Vous avez perdu le mot était "${selectedWords}"`)
+        }
+    }
 }
+
+//<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<Apelle des fonctions>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+underscoreWord();
+Main();
