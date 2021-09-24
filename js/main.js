@@ -18,7 +18,7 @@ let play = true;                                                     //boolean u
 
 function underscoreWord() {
     for (let i = 0; i < selectedWords.length; i++) {                 //incrémentation des underscores dans le tableau vide (même nombre que mot éclaté)
-    selectedWords[i] = hiddenWord.push(" _ ") 
+     selectedWords[i] = hiddenWord.push(" _ ") 
     }
 };
 
