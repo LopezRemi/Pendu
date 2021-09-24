@@ -19,17 +19,21 @@ function underscoreWord() {
     }
 };
 
+
+
 function Main() {
     let find ;                                                       //variable utilisé pour définir true ou false sur l'imput du joueur 
     while (play === true){                                           //boucle principale de la fonction avec comme condition (voir ligne 12)
         find = false;
-        if (hiddenWord.join("") === splitWord.join("")) {            // termine le jeu quand le joueur à trouvé le mot
+        let playerImput = prompt( "il vous reste " + life + " tentatives \n"  + hiddenWord ) //demande d'imput au joueur + affichage du mot en underscore
+        
+        if  (playerImput.length !== 1) {                             //statement qui verifie qu'il y a bien une seul lettre et relance la fonction si non.                    
+            Main()
+        }
+        if (hiddenWord.join("") === splitWord.join("")) {            // termine le jeu quand le joueur à trouvé le mot + affichage du mot
             play = false;
             return alert (`Bravo vous avez trouvé le mot ${selectedWords} (>'-')>`)
-            }
-        
-            let playerImput = prompt( "il vous reste " + life + " tentatives \n"  + hiddenWord ) //demande d'imput au joueur + affichage du mot en underscore
-
+        }
         for (let i = 0; i < splitWord.length; i++) {                //vérification de la concordance des index (imput joueur/mot éclaté)
             if (splitWord[i] === playerImput) {
             hiddenWord[i] = playerImput ;
