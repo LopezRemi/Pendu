@@ -16,6 +16,30 @@ let play = true;                                                     //boolean u
 
 //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<Mise en place des fonctions>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
+
+function menu () {
+   let selectMenu = prompt(`Menu,  Jouer : ' j '  Règles :  ' r '  Quitter : ' q ' `)
+
+    if (selectMenu == 'j') {
+       selectedWords = words[Math.floor(Math.random() * words.length)];
+       splitWord = selectedWords.split("");
+       life = 7;
+       underscoreWord() 
+       Main()
+    }
+    if (selectMenu == 'r') {
+        alert(`Le but du jeu est simple : deviner toute les lettres qui doivent composer un mot.
+         A chaque fois que le joueur devine une lettre, celle-ci est affichée`)
+         menu()
+    }
+    if (selectMenu == 'q'){
+        alert(`Merci d'être passé !`)
+    }
+    else {
+        menu()
+    }
+}
+
 function underscoreWord() {
     for (let i = 0; i < selectedWords.length; i++) {                 //incrémentation des underscores dans le tableau vide (même nombre que mot éclaté)
     selectedWords[i] = hiddenWord.push(" _ ") 
@@ -26,6 +50,7 @@ function underscoreWord() {
 //fonction principale où boucle la logique
 
 function Main() {
+    play = true;
     let find ;                                                       //variable utilisée pour définir true ou false sur l'imput du joueur 
     while (play === true){                                           //boucle principale de la fonction avec comme condition (voir ligne 12)
         find = false;
@@ -35,8 +60,9 @@ function Main() {
             Main()
         }
         if (hiddenWord.join("") === splitWord.join("")) {            // termine le jeu quand le joueur a trouvé le mot + affichage du mot
-            play = false;
-            return alert (`Bravo vous avez trouvé le mot ${selectedWords} (>'-')>`)
+            alert (`Bravo vous avez trouvé le mot ${selectedWords} (>'-')>`)
+            hiddenWord = [];                                         
+            menu()
         }
         for (let i = 0; i < splitWord.length; i++) {                //vérification de la concordance des index (imput joueur/mot éclaté)
             if (splitWord[i] === playerImput) {
@@ -50,12 +76,12 @@ function Main() {
         if (life === 0) {                                          //si plus de coup annonce de la défaite + affichage du mot
             play = false;
             alert (`Vous avez perdu le mot était "${selectedWords}"`)
+            hiddenWord = [];
+            menu()
         }
     }
 }
 
 //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<Apel des fonctions et alert d'arrivé sur le jeu>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+menu()
 
-alert ("Bienvenue sur le jeu du pendu à vous de trouver les lettres")
-underscoreWord();
-Main();
