@@ -17,7 +17,9 @@ let play = true;                                                     //boolean u
 //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<Mise en place des fonctions>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 function menu () {
    let selectMenu = prompt(`Menu,  Jouer : ' j '  Règles :  ' r '  Quitter : ' q ' `)
-
+    if (selectMenu == 'q'){
+        alert(`Merci d'être passé !`)
+    }   
     if (selectMenu == 'j') {
        selectedWords = words[Math.floor(Math.random() * words.length)];   //setup et resetup des datas necessaires pour re/lancer le jeu.
        splitWord = selectedWords.split("");
@@ -26,15 +28,12 @@ function menu () {
        Main()
     }
     if (selectMenu == 'r') {
-        alert(`Le but du jeu est simple : deviner toute les lettres qui doivent composer un mot.      //regles et apelle du menu.
-         A chaque fois que le joueur devine une lettre, celle-ci est affichée`)
-         menu()
-    }
-    if (selectMenu == 'q'){
-        alert(`Merci d'être passé !`)        
-    }
-    else {                                                               //relance le menu si aucun imput viable   
+        alert(`Le but du jeu est simple : deviner toute les lettres qui doivent composer un mot.\n       
+        A chaque fois que le joueur devine une lettre, celle-ci est affichée`)
         menu()
+    }
+    else if (selectMenu !== "j" && selectMenu !== "r" && selectMenu !== "q"){
+        menu()                                                               //relance le menu si aucun imput viable   
     }
 }
 
@@ -51,9 +50,11 @@ function Main() {
     let find;                                                        //variable utilisée pour définir true ou false sur l'imput du joueur 
     while (play === true){                                           //boucle principale de la fonction avec comme condition (voir ligne 12)
         if (hiddenWord.join("") === splitWord.join("")) {            // termine le jeu quand le joueur a trouvé le mot + affichage du mot
+            play = false;
             alert (`Bravo vous avez trouvé le mot ${selectedWords} (>'-')>`)
-            hiddenWord = [];                                         
-            menu();
+            hiddenWord = [];
+            life = 0;
+            return menu();
         }
         find = false;
         let playerImput = prompt( "il vous reste " + life + " tentatives \n"  + hiddenWord ) //demande d'imput au joueur + affichage du mot en underscore
@@ -74,10 +75,10 @@ function Main() {
             play = false;
             alert (`Vous avez perdu le mot était "${selectedWords}"`)
             hiddenWord = [];
-            menu()
+            menu();
         }
     }
 }
-//<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<Apel de la fonctions menu>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+//<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<Apelle de la fonctions menu>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 menu();
 
